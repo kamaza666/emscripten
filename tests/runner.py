@@ -18,7 +18,7 @@ http://kripken.github.io/emscripten-site/docs/getting_started/test-suite.html
 # XXX Use EMTEST_ALL_ENGINES=1 in the env to test all engines!
 
 from __future__ import print_function
-from subprocess import Popen, PIPE, STDOUT
+from subprocess import PIPE, STDOUT
 import argparse
 import atexit
 import contextlib
@@ -37,6 +37,7 @@ import re
 import shlex
 import shutil
 import string
+import subprocess
 import sys
 import tempfile
 import time
@@ -1135,7 +1136,7 @@ class BrowserCore(RunnerCore):
       cmd = shlex.split(EMTEST_BROWSER)
 
       def run_in_other_browser(url):
-        Popen(cmd + [url])
+        subprocess.Popen(cmd + [url])
 
       webbrowser.open_new = run_in_other_browser
       print("Using Emscripten browser: " + str(cmd))
@@ -1398,6 +1399,7 @@ def get_bullet_library(runner_core, use_cmake):
                                  configure=configure_commands,
                                  configure_args=configure_args,
                                  cache_name_extra=configure_commands[0])
+
 
 def build_library(name,
                   build_dir,
